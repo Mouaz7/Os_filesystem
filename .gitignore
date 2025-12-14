@@ -1,0 +1,21 @@
+# Compiled object files
+*.o
+
+# Executables
+*.exe
+filesystem
+test1
+test2
+test3
+test4
+test5
+
+# Disk file (generated at runtime)
+diskfile.bin
+
+# IDE/Editor folders
+.vscode/
+.idea/
+
+# Output files
+*_output.txt
