@@ -32,7 +32,7 @@ A complete simulated file system demonstrating OS concepts:
 
 ```
 ┌────────────────────────────────────────┐
-│           shell.cpp (User Interface)   │
+│   shell.cpp (User Interface)   │
 └────────────────────┬───────────────────┘
                      │
                      ▼
@@ -66,45 +66,34 @@ A complete simulated file system demonstrating OS concepts:
 
 ## ✨ Commands
 
-<table>
-<tr>
-<td valign="top">
+### 📂 File Operations
 
-### 📂 Files
+| Command            | Description                |
+| :----------------- | :------------------------- |
+| `create <file>`    | Create new file            |
+| `cat <file>`       | Show file content          |
+| `cp <src> <dst>`   | Copy file                  |
+| `mv <src> <dst>`   | Move/rename file           |
+| `rm <file>`        | Delete file                |
+| `append <f1> <f2>` | Append content of f1 to f2 |
+| `chmod <n> <file>` | Set permissions (e.g. 111) |
 
-| Command            | Description       |
-| :----------------- | :---------------- |
-| `create <file>`    | Create new file   |
-| `cat <file>`       | Show file content |
-| `cp <src> <dst>`   | Copy file         |
-| `mv <src> <dst>`   | Move/rename file  |
-| `rm <file>`        | Delete file       |
-| `append <f1> <f2>` | Append f1 to f2   |
-| `chmod <n> <file>` | Set permissions   |
+### 📁 Directory Operations
 
-</td>
-<td valign="top">
+| Command       | Description             |
+| :------------ | :---------------------- |
+| `mkdir <dir>` | Create new directory    |
+| `cd <dir>`    | Change directory        |
+| `pwd`         | Print current path      |
+| `ls`          | List directory contents |
 
-### 📁 Directories
+### ⚙️ System Commands
 
-| Command       | Description      |
-| :------------ | :--------------- |
-| `mkdir <dir>` | Create directory |
-| `cd <dir>`    | Change directory |
-| `pwd`         | Print path       |
-| `ls`          | List contents    |
-
-### ⚙️ System
-
-| Command  | Description |
-| :------- | :---------- |
-| `format` | Format disk |
-| `help`   | Show help   |
-| `quit`   | Exit shell  |
-
-</td>
-</tr>
-</table>
+| Command  | Description                  |
+| :------- | :--------------------------- |
+| `format` | Format disk (erase all data) |
+| `help`   | Show available commands      |
+| `quit`   | Exit the shell               |
 
 ---
 
