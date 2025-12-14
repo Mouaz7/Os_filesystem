@@ -4,7 +4,6 @@
 
 [![C++](https://img.shields.io/badge/C++-11-00599C?style=for-the-badge&logo=cplusplus&logoColor=white)](https://isocpp.org/)
 [![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://www.linux.org/)
-[![BTH](https://img.shields.io/badge/BTH-DV1628/DV1629-purple?style=for-the-badge)](https://www.bth.se/)
 
 **FAT-based file system implementation with interactive shell**
 
@@ -26,17 +25,29 @@ A complete simulated file system demonstrating OS concepts:
 
 ## 🏗️ Architecture
 
-```
-┌─────────────────────────────────────────┐
-│         Interactive Shell (shell.cpp)   │
-├─────────────────────────────────────────┤
-│         File System Core (fs.cpp)       │
-│   FAT Table │ Directories │ Paths       │
-├─────────────────────────────────────────┤
-│         Disk Layer (disk.cpp)           │
-├─────────────────────────────────────────┤
-│         diskfile.bin (8 MB)             │
-└─────────────────────────────────────────┘
+```mermaid
+graph TD
+    subgraph Application
+        Shell[Interactive Shell (shell.cpp)]
+    end
+
+    subgraph File_System
+        FS[File System Core (fs.cpp)]
+        Meta[FAT Table | Directories | Paths]
+    end
+
+    subgraph Driver
+        Disk[Disk Layer (disk.cpp)]
+    end
+
+    subgraph Hardware
+        Bin[("diskfile.bin (8 MB)")]
+    end
+
+    Shell --> FS
+    FS --- Meta
+    FS --> Disk
+    Disk --> Bin
 ```
 
 | Block ID | Content            | Size  | Description                           |
@@ -125,33 +136,3 @@ filesystem> pwd
 ├── Makefile          # Build config
 └── test_script*.cpp  # Test suite
 ```
-
----
-
-## ⚠️ Academic Integrity
-
-<div align="center">
-
-```
-⛔ DO NOT COPY THIS CODE ⛔
-```
-
-</div>
-
-This code was developed as a **graded lab assignment** at BTH.
-
-| ✅ You MAY                       | ❌ You MUST NOT                        |
-| :------------------------------- | :------------------------------------- |
-| Study the architecture and logic | Copy code for your own assignments     |
-| Learn FAT file system concepts   | Submit this project as your own work   |
-| Run and test the code locally    | Plagiarize any part of this repository |
-
-**All rights reserved.** File system concepts are universal, but this specific implementation is protected.
-
----
-
-<div align="center">
-
-_DV1628/DV1629 Operating Systems • Blekinge Institute of Technology_
-
-</div>
