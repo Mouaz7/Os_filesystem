@@ -39,24 +39,44 @@ A complete simulated file system demonstrating OS concepts:
 └─────────────────────────────────────────┘
 ```
 
-|  Block   | Purpose        |
-| :------: | :------------- |
-|   `0`    | Root Directory |
-|   `1`    | FAT Table      |
-| `2-2047` | Data Blocks    |
+| Block ID | Content            | Size  | Description                           |
+| :------: | :----------------- | :---- | :------------------------------------ |
+|   `0`    | **Root Directory** | 4 KB  | Entry point for the file hierarchy    |
+|   `1`    | **FAT Table**      | 4 KB  | Tracks used/free blocks & file chains |
+| `2-2047` | **Data Blocks**    | ~8 MB | Stores actual file content            |
 
 ---
 
 ## ✨ Commands
 
-| File               | Directory     | System             |
-| :----------------- | :------------ | :----------------- |
-| `create <file>`    | `mkdir <dir>` | `format`           |
-| `cat <file>`       | `cd <dir>`    | `chmod <n> <file>` |
-| `cp <src> <dst>`   | `pwd`         | `help`             |
-| `mv <src> <dst>`   | `ls`          | `quit`             |
-| `rm <file>`        |               |                    |
-| `append <f1> <f2>` |               |                    |
+### 📂 File Operations
+
+| Command    | Usage                | Description                           |
+| :--------- | :------------------- | :------------------------------------ |
+| **create** | `create <file>`      | Create a new file (opens editor mode) |
+| **cat**    | `cat <file>`         | Display the contents of a file        |
+| **cp**     | `cp <src> <dst>`     | Copy a file to a new location         |
+| **mv**     | `mv <src> <dst>`     | Move or rename a file                 |
+| **rm**     | `rm <file>`          | Remove/delete a file                  |
+| **append** | `append <src> <dst>` | Append content of `src` to `dst`      |
+| **chmod**  | `chmod <mod> <file>` | Change file permissions (e.g. `111`)  |
+
+### 📁 Directory Operations
+
+| Command   | Usage         | Description                          |
+| :-------- | :------------ | :----------------------------------- |
+| **mkdir** | `mkdir <dir>` | Create a new directory               |
+| **cd**    | `cd <dir>`    | Change current directory             |
+| **pwd**   | `pwd`         | Print current working directory path |
+| **ls**    | `ls`          | List files in current directory      |
+
+### ⚙️ System
+
+| Command    | Usage    | Description                               |
+| :--------- | :------- | :---------------------------------------- |
+| **format** | `format` | Format the virtual disk (erases all data) |
+| **help**   | `help`   | Show available commands                   |
+| **quit**   | `quit`   | Exit the shell                            |
 
 ---
 
@@ -77,7 +97,7 @@ make runtests
 
 ---
 
-## 💻 Usage
+## 💻 Usage Example
 
 ```bash
 filesystem> format
@@ -120,12 +140,13 @@ filesystem> pwd
 
 This code was developed as a **graded lab assignment** at BTH.
 
-| ❌ Do NOT            | ✅ You MAY             |
-| :------------------- | :--------------------- |
-| Copy for assignments | Study the architecture |
-| Submit as your own   | Learn FAT concepts     |
+| ✅ You MAY                       | ❌ You MUST NOT                        |
+| :------------------------------- | :------------------------------------- |
+| Study the architecture and logic | Copy code for your own assignments     |
+| Learn FAT file system concepts   | Submit this project as your own work   |
+| Run and test the code locally    | Plagiarize any part of this repository |
 
-**All rights reserved.** No permission to copy or submit as your own work.
+**All rights reserved.** File system concepts are universal, but this specific implementation is protected.
 
 ---
 
