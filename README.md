@@ -4,8 +4,11 @@
 
 [![C++](https://img.shields.io/badge/C++-11-00599C?style=for-the-badge&logo=cplusplus&logoColor=white)](https://isocpp.org/)
 [![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)](https://www.linux.org/)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
 **FAT-based file system implementation with interactive shell**
+
+[Features](#-overview) • [Commands](#-commands) • [Build](#-build--run) • [Usage](#-usage-example)
 
 </div>
 
@@ -15,94 +18,109 @@
 
 A complete simulated file system demonstrating OS concepts:
 
-- **Block storage** with FAT (File Allocation Table)
-- **Hierarchical directories** with subdirectory support
-- **Unix-like permissions** (read/write/execute)
-- **Path resolution** (absolute & relative paths)
-- **8 MB virtual disk** (2048 blocks × 4 KB)
+| Feature                         | Description                                  |
+| :------------------------------ | :------------------------------------------- |
+| 💾 **Block Storage**            | FAT (File Allocation Table) based allocation |
+| 📂 **Hierarchical Directories** | Full subdirectory support                    |
+| 🔐 **Unix-like Permissions**    | Read, write, execute flags                   |
+| 🛣️ **Path Resolution**          | Both absolute & relative paths               |
+| 💿 **Virtual Disk**             | 8 MB disk (2048 blocks × 4 KB)               |
 
 ---
 
 ## 🏗️ Architecture
 
 ```mermaid
-graph TD
-    subgraph Application
-        Shell[Interactive Shell (shell.cpp)]
+flowchart TB
+    subgraph APP["📟 Application Layer"]
+        Shell["shell.cpp"]
     end
 
-    subgraph File_System
-        FS[File System Core (fs.cpp)]
-        Meta[FAT Table | Directories | Paths]
+    subgraph FS["📁 File System Layer"]
+        Core["fs.cpp"]
+        FAT["FAT + Directories"]
     end
 
-    subgraph Driver
-        Disk[Disk Layer (disk.cpp)]
+    subgraph IO["💽 Disk Layer"]
+        Disk["disk.cpp"]
     end
 
-    subgraph Hardware
-        Bin[("diskfile.bin (8 MB)")]
+    subgraph HW["🗄️ Storage"]
+        File[("diskfile.bin")]
     end
 
-    Shell --> FS
-    FS --- Meta
-    FS --> Disk
-    Disk --> Bin
+    Shell --> Core
+    Core --> FAT
+    Core --> Disk
+    Disk --> File
 ```
 
-| Block ID | Content            | Size  | Description                           |
-| :------: | :----------------- | :---- | :------------------------------------ |
-|   `0`    | **Root Directory** | 4 KB  | Entry point for the file hierarchy    |
-|   `1`    | **FAT Table**      | 4 KB  | Tracks used/free blocks & file chains |
-| `2-2047` | **Data Blocks**    | ~8 MB | Stores actual file content            |
+### 📊 Disk Layout
+
+| Block  | Purpose        | Size  |
+| :----: | :------------- | :---- |
+|   0    | Root Directory | 4 KB  |
+|   1    | FAT Table      | 4 KB  |
+| 2-2047 | Data Blocks    | ~8 MB |
 
 ---
 
 ## ✨ Commands
 
-### 📂 File Operations
+<table>
+<tr>
+<td valign="top">
 
-| Command    | Usage                | Description                           |
-| :--------- | :------------------- | :------------------------------------ |
-| **create** | `create <file>`      | Create a new file (opens editor mode) |
-| **cat**    | `cat <file>`         | Display the contents of a file        |
-| **cp**     | `cp <src> <dst>`     | Copy a file to a new location         |
-| **mv**     | `mv <src> <dst>`     | Move or rename a file                 |
-| **rm**     | `rm <file>`          | Remove/delete a file                  |
-| **append** | `append <src> <dst>` | Append content of `src` to `dst`      |
-| **chmod**  | `chmod <mod> <file>` | Change file permissions (e.g. `111`)  |
+### 📂 Files
 
-### 📁 Directory Operations
+| Command            | Description       |
+| :----------------- | :---------------- |
+| `create <file>`    | Create new file   |
+| `cat <file>`       | Show file content |
+| `cp <src> <dst>`   | Copy file         |
+| `mv <src> <dst>`   | Move/rename file  |
+| `rm <file>`        | Delete file       |
+| `append <f1> <f2>` | Append f1 to f2   |
+| `chmod <n> <file>` | Set permissions   |
 
-| Command   | Usage         | Description                          |
-| :-------- | :------------ | :----------------------------------- |
-| **mkdir** | `mkdir <dir>` | Create a new directory               |
-| **cd**    | `cd <dir>`    | Change current directory             |
-| **pwd**   | `pwd`         | Print current working directory path |
-| **ls**    | `ls`          | List files in current directory      |
+</td>
+<td valign="top">
+
+### 📁 Directories
+
+| Command       | Description      |
+| :------------ | :--------------- |
+| `mkdir <dir>` | Create directory |
+| `cd <dir>`    | Change directory |
+| `pwd`         | Print path       |
+| `ls`          | List contents    |
 
 ### ⚙️ System
 
-| Command    | Usage    | Description                               |
-| :--------- | :------- | :---------------------------------------- |
-| **format** | `format` | Format the virtual disk (erases all data) |
-| **help**   | `help`   | Show available commands                   |
-| **quit**   | `quit`   | Exit the shell                            |
+| Command  | Description |
+| :------- | :---------- |
+| `format` | Format disk |
+| `help`   | Show help   |
+| `quit`   | Exit shell  |
+
+</td>
+</tr>
+</table>
 
 ---
 
 ## 🚀 Build & Run
 
 ```bash
+# Clone and build
 git clone https://github.com/Mouaz7/Os_filesystem.git
 cd Os_filesystem
 make
+
+# Run the filesystem
 ./filesystem
-```
 
-**Run tests:**
-
-```bash
+# Run tests
 make runtests
 ```
 
@@ -129,10 +147,19 @@ filesystem> pwd
 ## 📁 Project Structure
 
 ```
-├── main.cpp          # Entry point
-├── shell.cpp/h       # Shell interface
-├── fs.cpp/h          # File system core
-├── disk.cpp/h        # Disk I/O
-├── Makefile          # Build config
-└── test_script*.cpp  # Test suite
+Os_filesystem/
+├── main.cpp           # Entry point
+├── shell.cpp/.h       # Interactive shell
+├── fs.cpp/.h          # File system core
+├── disk.cpp/.h        # Disk I/O layer
+├── Makefile           # Build configuration
+└── test_script*.cpp   # Test suite
 ```
+
+---
+
+<div align="center">
+
+**Made with ❤️ using C++**
+
+</div>
